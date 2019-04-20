@@ -1,0 +1,25 @@
+#container {
+  width: 20rem;
+  padding: 1.2rem;
+  background-color: $dark-cl;
+}
+
+#display {
+  width: 100%;
+  height: 5rem;
+  padding: 2px 4px;
+  margin-bottom: 0.5rem;
+  @include border(4px , outset , $border-cl , all);
+  color: rgb(36, 36, 36);
+  background-color: #A2AF77;
+  font-size: 1.5rem;
+  font-weight: 600;
+  direction: rtl;
+  overflow: hidden;
+}
+
+.buttons-container{
+  display: grid;
+  grid-template-columns: repeat(4 , 1fr);
+  grid-gap: 5px;
+}

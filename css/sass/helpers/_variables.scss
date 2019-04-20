@@ -1,17 +1,9 @@
-$basic-fz : 15px !default;
+$basic-fz: 15px !default;
 
 //colors
-$main-cl: #666 !default;
-$main-bg: #00aff0 !default;
-$sec-bg: #7fba00 !default;
-$light-bg: #e4eef2 !default;
-$dark-bg: #2b5464 !default;
+$light-cl: #e4eef2 !default;
+$dark-cl: #161867 !default;
+$border-cl : #6d6d6c !default;
 
 //font families
-$main-ff: "Segoe UI",
-"Segoe WF",
-"Segoe Regular" !default;
-
-// Media Queries
-$xs-width : 767px;
-$xs-screen: (max-width:$xs-width);
+$main-ff: "Cairo", "Arial", "Segoe Regular" !default;

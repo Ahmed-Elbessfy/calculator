@@ -1,0 +1,25 @@
+button {
+  width: 4rem;
+  height: 4rem;
+  @include border(3px, outset, $border-cl, all);
+  background-color: $light-cl;
+  color: $dark-cl;
+  font-size: 2rem;
+  font-family: $main-ff;
+}
+
+button:focus,
+button:active {
+  outline: none;
+}
+
+#add {
+  grid-column: 4/5;
+  grid-row: 3/5;
+  height: auto;
+}
+
+#equal {
+  grid-column: 3/5;
+  width: auto;
+}
