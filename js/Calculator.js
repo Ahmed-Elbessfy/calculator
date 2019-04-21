@@ -41,3 +41,30 @@ let numbers = [
   displayArr = [],
   // temporary array to store numbers until clicking an operator
   tempNumArr = [];
+
+// Set starting value in display area to 0
+let displayedNum = 0;
+// let splReg = /[+/*-]/;
+// console.log("12354+ssdd-ffgfgbb.jj*4558.55612".split(splReg));
+// console.log(eval(((2 + 3) * 10) / 2 + Math.sqrt(49)));
+
+// Functions
+
+// Clear function
+const clearFun = () => {
+  console.log("clearFun was called");
+  display.innerHTML = 0;
+  displayArr = [];
+};
+
+// Functionality
+clear.addEventListener("click", clearFun);
+document.addEventListener("keydown", e => {
+  // console.log(e.keyCode);
+  if (e.keyCode === 46) {
+    clearFun();
+  }
+});
+
+// Show displayNum on displaying area
+display.innerHTML = displayedNum;
