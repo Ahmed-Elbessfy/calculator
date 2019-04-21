@@ -57,6 +57,25 @@ const clearFun = () => {
   displayArr = [];
 };
 
+// Controlling display function
+/* This function should output
+a set of numbers and operators
+to operate through and create the output result
+*/
+const controlDisplay = sym => {
+  console.log("controlDisplay called" , sym);
+};
+
+// Add event listener on clicking on a number button
+for (num of numbers) {
+  num.onclick = (e) => controlDisplay(e.target.innerHTML);
+}
+
+// Add event listener on clicking on a number button
+for (operator of operators) {
+  operator.onclick = (e) => controlDisplay(e.target.innerHTML);
+}
+
 // Functionality
 clear.addEventListener("click", clearFun);
 document.addEventListener("keydown", e => {
