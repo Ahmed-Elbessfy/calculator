@@ -101,6 +101,16 @@ const controlDisplay = sym => {
   display.innerHTML = displayArr.join("");
 };
 
+// Calculate function
+const calculate = () => {
+  console.log("equal clicked");
+  // join displayArr function to operate on
+  let joined = displayArr.join("");
+  // get final result from the value joined displayArr
+  let result = eval(joined);
+  console.log(joined, result);
+};
+
 // Add event listener on clicking on a number button
 for (num of numbers) {
   num.onclick = e => controlDisplay(e.target.innerHTML);
@@ -120,5 +130,6 @@ document.addEventListener("keydown", e => {
   }
 });
 
+equal.addEventListener("click", calculate);
 // Show displayNum on displaying area
 display.innerHTML = displayedNum;
