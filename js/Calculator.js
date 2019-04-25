@@ -86,14 +86,16 @@ const controlDisplay = sym => {
     then remove the last operator and add the new one
     else add the clicked button operator
     */
-    if (!["√", "+", "-", "*", "/"].includes(displayArr[displayArr.length - 1])) {
+    if (
+      !["√", "+", "-", "*", "/"].includes(displayArr[displayArr.length - 1])
+    ) {
       displayArr.push(sym);
     } else {
       displayArr.pop();
       displayArr.push(sym);
     }
   } else {
-  /* If the clicked button is not a decimal nor an operator,
+    /* If the clicked button is not a decimal nor an operator,
   then add it to the displayArr cuz it is a number */
     displayArr.push(sym);
   }
@@ -104,11 +106,31 @@ const controlDisplay = sym => {
 // Calculate function
 const calculate = () => {
   console.log("equal clicked");
-  // join displayArr function to operate on
   let joined = displayArr.join("");
-  // get final result from the value joined displayArr
-  let result = eval(joined);
-  console.log(joined, result);
+  if (displayArr.includes("√")) {
+    let sqrtSym = displayArr.indexOf("√");
+    let operAfterSqrt = displayArr.indexOf("-", sqrtSym);
+    let displayArrBeforeSqrt = displayArr.slice(0, sqrtSym);
+    let displayArrAfterSqrt = displayArr.slice(operAfterSqrt);
+    let sqrtNum = [...displayArr].slice(sqrtSym + 1, operAfterSqrt).join("");
+    let sqrtEval = Math.sqrt(sqrtNum);
+    // displayArr[sqrtSym] = sqrtEval;
+    // fix the sqrt operator bug in the controlDisplay function
+    // try 5√49-5 to remember the bug
+    displayArr = displayArrBeforeSqrt + sqrtEval + displayArrAfterSqrt
+    console.log(displayArr);
+    console.log(sqrtSym);
+    console.log(operAfterSqrt);
+    console.log(displayArrBeforeSqrt);
+    console.log(displayArrAfterSqrt);
+    console.log(sqrtNum);
+    console.log(sqrtEval);
+  } else {
+    // join displayArr function to operate on
+    // get final result from the value joined displayArr
+    let result = eval(joined);
+    console.log(joined, result);
+  }
 };
 
 // Add event listener on clicking on a number button
