@@ -63,8 +63,25 @@ a set of numbers and operators
 to operate through and create the output result
 */
 const controlDisplay = sym => {
-  // Check if the clicked button is a decimal point
-  if (sym == ".") {
+  // if clicked button is an OPERATOR
+  if (["+", "-", "*", "/"].includes(sym)) {
+    // get last item in displayArr
+    let last = [...displayArr].pop();
+    // if last item is NOT a square op., proceed otherwise don't consider the clicked operator
+    if (last !== "√") {
+      // if last item is an operator, replace it with the new clicked operator
+      if (["+", "-", "*", "/"].includes(last)) {
+        // remove last item in displayArr
+        displayArr.pop();
+        // push the new operator at the end of the displayArr
+        displayArr.push(sym);
+      } else {
+        // if last item is not an operator, push the clicked operator at the end of the displayArr
+        displayArr.push(sym);
+      }
+    }
+  } else if (sym === ".") {
+    //if clicked button is a DECIMAL POINT
     /* split displayArr at every operator to
     check if there is a decimal point
     in the typed number
@@ -80,25 +97,28 @@ const controlDisplay = sym => {
     if (!check[check.length - 1].includes(".")) {
       displayArr.push(sym);
     }
-    // Check if the clicked button is an operator
-  } else if (["√", "+", "-", "*", "/"].includes(sym)) {
-    /* if the last item in displayArr is an array is an operator
-    then remove the last operator and add the new one
-    else add the clicked button operator
+  } else if (sym === "√") {
+    // if clicked button is a SQUARE OPERATOR
+    /* split displayArr at every operator to
+    check if there is a Square operator
+    in the typed number
     */
-    if (
-      !["√", "+", "-", "*", "/"].includes(displayArr[displayArr.length - 1])
-    ) {
-      displayArr.push(sym);
-    } else {
-      displayArr.pop();
+    // regexp to select only operator signs but without square operator
+    let rgb = /[+/*-]/;
+    // join displayArr then split it cuz split is a string method
+    let check = displayArr.join("").split(rgb);
+    /* if there is no decimal sign in the
+    last typed number then add a decimal point
+    else don't
+    */
+    if (!check[check.length - 1].includes("√")) {
       displayArr.push(sym);
     }
   } else {
-    /* If the clicked button is not a decimal nor an operator,
-  then add it to the displayArr cuz it is a number */
+    // if clicked button is a NUMBER
     displayArr.push(sym);
   }
+
   // displayed clicked buttons in the display area
   display.innerHTML = displayArr.join("");
 };
@@ -117,7 +137,7 @@ const calculate = () => {
     // displayArr[sqrtSym] = sqrtEval;
     // fix the sqrt operator bug in the controlDisplay function
     // try 5√49-5 to remember the bug
-    displayArr = displayArrBeforeSqrt + sqrtEval + displayArrAfterSqrt
+    displayArr = displayArrBeforeSqrt + sqrtEval + displayArrAfterSqrt;
     console.log(displayArr);
     console.log(sqrtSym);
     console.log(operAfterSqrt);
