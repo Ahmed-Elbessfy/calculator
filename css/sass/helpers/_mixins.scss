@@ -7,3 +7,11 @@
     }
   }
 }
+
+@mixin prefixer($prop, $val, $prefixes: ()) {
+  //prefixer
+  @each $pref in $prefixes {
+    #{'-' + $pref + '-' + $prop}: $val;
+  }
+  #{$prop}: $val;
+}
