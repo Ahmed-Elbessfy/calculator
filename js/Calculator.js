@@ -90,12 +90,29 @@ const controlDisplay = sym => {
     let rgb = /[√+/*-]/;
     // join displayArr then split it cuz split is a string method
     let check = displayArr.join("").split(rgb);
-    /* if there is no decimal sign in the
+    /* if there is no decimal point in the
     last typed number then add a decimal point
     else don't
     */
     if (!check[check.length - 1].includes(".")) {
-      displayArr.push(sym);
+      /*
+      if a decimal point clicked and the last item in displayArr
+      is not a number, add a zero before the decimal point
+      otherwise add the decimal point only
+      */
+      //
+      if (
+        ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(
+          displayArr[displayArr.length - 1]
+        )
+      ) {
+        // if last item in displayArr is a number
+        displayArr.push(sym);
+      } else {
+        // if last item in displayArr is not a number, add a zero number before decimal point
+        displayArr.push("0");
+        displayArr.push(sym);
+      }
     }
   } else if (sym === "√") {
     // if clicked button is a SQUARE OPERATOR
@@ -107,11 +124,14 @@ const controlDisplay = sym => {
     let rgb = /[+/*-]/;
     // join displayArr then split it cuz split is a string method
     let check = displayArr.join("").split(rgb);
-    /* if there is no decimal sign in the
-    last typed number then add a decimal point
-    else don't
+    /* if there is no square operator in the
+    last typed number and the last clicked button is a normal number
+    then add a square operator else don't
     */
-    if (!check[check.length - 1].includes("√")) {
+    if (
+      !check[check.length - 1].includes("√") &&
+      ["+", "-", "*", "/"].includes(displayArr[displayArr.length - 1])
+    ) {
       displayArr.push(sym);
     }
   } else {
