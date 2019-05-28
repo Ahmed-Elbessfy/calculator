@@ -23,18 +23,18 @@ let equal = document.querySelector("#equal");
 // Arrays
 // Numbers array
 let numbers = [
-    one,
-    two,
-    three,
-    four,
-    five,
-    six,
-    seven,
-    eight,
-    nine,
-    zero,
-    decimal
-  ],
+  one,
+  two,
+  three,
+  four,
+  five,
+  six,
+  seven,
+  eight,
+  nine,
+  zero,
+  decimal
+],
   // Operator array
   operators = [add, subtract, divide, multiply, square],
   // Displayed data on display area
@@ -116,24 +116,42 @@ const controlDisplay = sym => {
     }
   } else if (sym === "√") {
     // if clicked button is a SQUARE OPERATOR
+    /* Add square operator only if the previous
+    clicked button is a normal operator
+    */
+    // get last item in displayArr
+    let last = [...displayArr].pop();
+    // if displayArr is not empty which means that a Square operator is not the first clicked button
+    if (displayArr.length > 0) {
+      // check if the last clicked button is an Operator
+      if (["+", "-", "*", "/"].includes(last)) {
+        // if last button is an operator, then accept the square operator
+        displayArr.push(sym)
+      }
+      // if displayArr is empty which means that square operator is first clicked button, then accept square operator
+    } else {
+      displayArr.push(sym)
+    }
+
     /* split displayArr at every operator to
     check if there is a Square operator
     in the typed number
     */
-    // regexp to select only operator signs but without square operator
-    let rgb = /[+/*-]/;
-    // join displayArr then split it cuz split is a string method
-    let check = displayArr.join("").split(rgb);
-    /* if there is no square operator in the
-    last typed number and the last clicked button is a normal number
-    then add a square operator else don't
-    */
-    if (
-      !check[check.length - 1].includes("√") &&
-      ["+", "-", "*", "/"].includes(displayArr[displayArr.length - 1])
-    ) {
-      displayArr.push(sym);
-    }
+    // console.log(displayArr)
+    // // regexp to select only operator signs but without square operator
+    // let rgb = /[+/*-]/;
+    // // join displayArr then split it cuz split is a string method
+    // let check = displayArr.join("").split(rgb);
+    // /* if there is no square operator in the
+    // last typed number and the last clicked button is a normal number
+    // then add a square operator else don't
+    // */
+    // if (
+    //   !check[check.length - 1].includes("√") &&
+    //   ["+", "-", "*", "/"].includes(displayArr[displayArr.length - 1])
+    // ) {
+    //   displayArr.push(sym);
+    // }
   } else {
     // if clicked button is a NUMBER
     displayArr.push(sym);
