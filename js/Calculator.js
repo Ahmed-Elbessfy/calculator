@@ -19,7 +19,7 @@ let two = document.querySelector("#two");
 let one = document.querySelector("#one");
 let decimal = document.querySelector("#decimal");
 let zero = document.querySelector("#zero");
-let equal = document.querySelector("#equal");
+let equal = document.querySelector("#equals");
 // Arrays
 // Numbers array
 let numbers = [
