@@ -152,6 +152,31 @@ const controlDisplay = sym => {
     // ) {
     //   displayArr.push(sym);
     // }
+  } else if (sym === "0") {
+    // if clicked button is zero
+    /* prevent starting any operated number with more than one zero
+    - check if the last clicked button is zero
+    - if No push zero to displayArr
+    - If Yes:
+      - check if the secondLast element is NOT
+        - a NaN ( if it was starting number) and NOT and operator
+        - an Operator ( new number in the operation)
+        - or it can be a decimal point
+      then push zero to the displayArr
+    */
+    let last = [...displayArr].pop();
+    // if last clicked button is a Zero
+    if (last == "0") {
+      // get the second last element in displayArr
+      let secondLast = displayArr[displayArr.length - 2]
+      // if secondLast element is not an Operator and not a NaN or equals decimal point, push zero to displayArr
+      if (!["√", "+", "/", "*", "-"].includes(secondLast) && !isNaN(secondLast) || secondLast == ".") {
+        displayArr.push(sym)
+      }
+    } else {
+      // if last element in displayArr is not zero, then push zero to displayArr
+      displayArr.push(sym)
+    }
   } else {
     // if clicked button is a NUMBER
     displayArr.push(sym);
