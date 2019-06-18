@@ -190,7 +190,7 @@ const controlDisplay = sym => {
 document.addEventListener('keydown', e => {
   // Numbers from 0 to 9
   if (e.keyCode == 96 || e.keyCode == 48) {
-    controlDisplay(0)
+    controlDisplay('0')
   }
   if (e.keyCode == 97 || e.keyCode == 49) {
     controlDisplay(1)
@@ -250,6 +250,13 @@ document.addEventListener('keydown', e => {
   }
   if (e.keyCode == 191 && e.shiftKey) {
     controlDisplay('/')
+  }
+  // Equal
+  if (e.keyCode == 13) {
+    controlDisplay('=')
+  }
+  if (e.keyCode == 187 && e.shiftKey) {
+    controlDisplay('=')
   }
 })
 
