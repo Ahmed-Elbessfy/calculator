@@ -186,6 +186,73 @@ const controlDisplay = sym => {
   display.innerHTML = displayArr.join("");
 };
 
+// Keyboard controlling keys
+document.addEventListener('keydown', e => {
+  // Numbers from 0 to 9
+  if (e.keyCode == 96 || e.keyCode == 48) {
+    controlDisplay(0)
+  }
+  if (e.keyCode == 97 || e.keyCode == 49) {
+    controlDisplay(1)
+  }
+  if (e.keyCode == 98 || e.keyCode == 50) {
+    controlDisplay(2)
+  }
+  if (e.keyCode == 99 || e.keyCode == 51) {
+    controlDisplay(3)
+  }
+  if (e.keyCode == 100 || e.keyCode == 52) {
+    controlDisplay(4)
+  }
+  if (e.keyCode == 101 || e.keyCode == 53) {
+    controlDisplay(5)
+  }
+  if (e.keyCode == 102 || e.keyCode == 54) {
+    controlDisplay(6)
+  }
+  if (e.keyCode == 103 || e.keyCode == 55) {
+    controlDisplay(7)
+  }
+  if (e.keyCode == 104 || e.keyCode == 56) {
+    controlDisplay(8)
+  }
+  if (e.keyCode == 105 || e.keyCode == 57) {
+    controlDisplay(9)
+  }
+  // Decimal point
+  if (e.keyCode == 110) {
+    controlDisplay('.')
+  }
+  if (e.keyCode == 190 && e.shiftKey) {
+    controlDisplay('.')
+  }
+  // Operators
+  if (e.keyCode == 107) {
+    controlDisplay('+')
+  }
+  if (e.keyCode == 187 && e.shiftKey) {
+    controlDisplay('+')
+  }
+  if (e.keyCode == 109) {
+    controlDisplay('-')
+  }
+  if (e.keyCode == 189 && e.shiftKey) {
+    controlDisplay('-')
+  }
+  if (e.keyCode == 106) {
+    controlDisplay('*')
+  }
+  if (e.keyCode == 56 && e.shiftKey) {
+    controlDisplay('*')
+  }
+  if (e.keyCode == 111) {
+    controlDisplay('/')
+  }
+  if (e.keyCode == 191 && e.shiftKey) {
+    controlDisplay('/')
+  }
+})
+
 // Calculate function
 const calculate = () => {
   console.log("equal clicked");
