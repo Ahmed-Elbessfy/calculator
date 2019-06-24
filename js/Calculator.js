@@ -262,31 +262,79 @@ document.addEventListener('keydown', e => {
 
 // Calculate function
 const calculate = () => {
-  console.log("equal clicked");
-  let joined = displayArr.join("");
-  if (displayArr.includes("√")) {
-    let sqrtSym = displayArr.indexOf("√");
-    let operAfterSqrt = displayArr.indexOf("-", sqrtSym);
-    let displayArrBeforeSqrt = displayArr.slice(0, sqrtSym);
-    let displayArrAfterSqrt = displayArr.slice(operAfterSqrt);
-    let sqrtNum = [...displayArr].slice(sqrtSym + 1, operAfterSqrt).join("");
-    let sqrtEval = Math.sqrt(sqrtNum);
-    // displayArr[sqrtSym] = sqrtEval;
-    // fix the sqrt operator bug in the controlDisplay function
-    // try 5√49-5 to remember the bug
-    displayArr = displayArrBeforeSqrt + sqrtEval + displayArrAfterSqrt;
-    console.log(displayArr);
-    console.log(sqrtSym);
-    console.log(operAfterSqrt);
-    console.log(displayArrBeforeSqrt);
-    console.log(displayArrAfterSqrt);
-    console.log(sqrtNum);
-    console.log(sqrtEval);
+  // result variable where final result array stored
+  let result;
+  /* if the displayArr includes a square operation:
+      - create an operated array to hold joined operated numbers and operators
+      and num array to temporary hold current numbers
+      - loop through displayArr elements:
+        - if element is number or square operator, push it to num array
+        - if element is an operator of these (+,-,*,/), push joined num array
+        to operated array as old number is completed and new number will start
+        then push element ( which is one of these (+,-,*,/) ) to operated array
+        and finally empty num array for the new number
+      - loop through operated array elements:
+        - if element includes a square operator, replace it with square of the included number
+      - and finally, set result value to be joined operated array
+    if the displayArr doesn't include a square operation:
+      - set result value to be joined displayArr array
+  */
+  // if displayArr includes square operation
+  if (displayArr.includes('√')) {
+    // declare operated and num array
+    let operated = []
+    let num = []
+    // loop through displayArr to store joined numbers and operators in the operated array
+    displayArr.forEach(it => {
+      // if element is an one of these operators (+,-,*,/)
+      if (["+", "/", "*", "-"].includes(it)) {
+        // current number is completed, so push joined num array to operated array
+        operated.push(num.join(""))
+        // push element which is one of these operators (+,-,*,/) after the current number
+        operated.push(it)
+        // empty num array to the new number
+        num = []
+      } else {
+        // if element is a number or a square operator, then push to num array
+        num.push(it)
+      }
+    })
+    // if last element of displayArr array is not one of these operators (+,-,*,/),
+    // then the last operated number - which is currently stored in num array -
+    // won't be add to operated array and won't be calculated,
+    // so we need to check if the last operated value == the joined num array,
+    // if not, push joined num array to operated array and empty num array for future numbers
+    if (operated[operated.length - 1] !== num.join("")) {
+      operated.push(num.join(""))
+      num = []
+    }
+
+    // loop through operated array to find elements contains square operators
+    operated.forEach((item, i) => {
+      // if element contains a square operators,
+      // get element value without square operator using substring
+      // then get square value of the new element value
+      // then replace the element with the new square value
+      if (item.includes("√")) {
+        operated.splice(i, 1, Math.sqrt(item.substring(1)))
+      }
+    })
+    // finally, assign joined operated array to result variable
+    result = operated.join("")
   } else {
-    // join displayArr function to operate on
-    // get final result from the value joined displayArr
-    let result = eval(joined);
-    console.log(joined, result);
+    // assign displayArr operated array to result variable
+    result = displayArr.join("")
+  }
+  // get final value of result
+  result = eval(result)
+  // if result is a decimal number, then it must have only 5 decimal places
+  // check if result is a decimal number by comparing Math.floor value for result with original result value
+  if (result == Math.floor(result)) {
+    // if result is not a decimal number, return result as it is
+    console.log(result)
+  } else {
+    // if result is a decimal number, limit decimal places to 5
+    console.log(result.toFixed(5))
   }
 };
 
