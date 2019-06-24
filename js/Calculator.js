@@ -253,10 +253,10 @@ document.addEventListener('keydown', e => {
   }
   // Equal
   if (e.keyCode == 13) {
-    controlDisplay('=')
+    calculate()
   }
   if (e.keyCode == 187 && e.shiftKey) {
-    controlDisplay('=')
+    calculate()
   }
 })
 
