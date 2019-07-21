@@ -255,7 +255,7 @@ document.addEventListener('keydown', e => {
   if (e.keyCode == 13) {
     calculate()
   }
-  if (e.keyCode == 187 && e.shiftKey) {
+  if (e.keyCode == 187) {
     calculate()
   }
 })
