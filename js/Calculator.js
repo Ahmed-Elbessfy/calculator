@@ -329,13 +329,11 @@ const calculate = () => {
   result = eval(result)
   // if result is a decimal number, then it must have only 5 decimal places
   // check if result is a decimal number by comparing Math.floor value for result with original result value
-  if (result == Math.floor(result)) {
-    // if result is not a decimal number, return result as it is
-    console.log(result)
-  } else {
+  if (result !== Math.floor(result)) {
     // if result is a decimal number, limit decimal places to 5
-    console.log(result.toFixed(5))
+    result = +result.toFixed(5)
   }
+  display.innerHTML += `<br>${result}`
 };
 
 // Add event listener on clicking on a number button
