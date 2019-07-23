@@ -121,7 +121,7 @@ const controlDisplay = sym => {
       */
       //
       if (
-        ["0", 1, 2, 3, 4, 5, 6, 7, 8, 9].includes(
+        ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(
           displayArr[displayArr.length - 1]
         )
       ) {
@@ -236,31 +236,31 @@ document.addEventListener('keydown', e => {
     controlDisplay('0')
   }
   if (e.keyCode == 97 || e.keyCode == 49) {
-    controlDisplay(1)
+    controlDisplay('1')
   }
   if (e.keyCode == 98 || e.keyCode == 50) {
-    controlDisplay(2)
+    controlDisplay('2')
   }
   if (e.keyCode == 99 || e.keyCode == 51) {
-    controlDisplay(3)
+    controlDisplay('3')
   }
   if (e.keyCode == 100 || e.keyCode == 52) {
-    controlDisplay(4)
+    controlDisplay('4')
   }
   if (e.keyCode == 101 || e.keyCode == 53) {
-    controlDisplay(5)
+    controlDisplay('5')
   }
   if (e.keyCode == 102 || e.keyCode == 54) {
-    controlDisplay(6)
+    controlDisplay('6')
   }
   if (e.keyCode == 103 || e.keyCode == 55) {
-    controlDisplay(7)
+    controlDisplay('7')
   }
   if (e.keyCode == 104 || e.keyCode == 56) {
-    controlDisplay(8)
+    controlDisplay('8')
   }
   if (e.keyCode == 105 || e.keyCode == 57) {
-    controlDisplay(9)
+    controlDisplay('9')
   }
   // Decimal point
   if (e.keyCode == 110) {
