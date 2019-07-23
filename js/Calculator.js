@@ -39,8 +39,8 @@ let numbers = [
   operators = [add, subtract, divide, multiply, square],
   // Displayed data on display area
   displayArr = [],
-  // temporary array to store numbers until clicking an operator
-  tempNumArr = [];
+  // temporary array to store result value for the next operation
+  tempResult = [];
 
 // Set starting value in display area to 0
 let displayedNum = 0;
@@ -55,6 +55,7 @@ const clearFun = () => {
   console.log("clearFun was called");
   display.innerHTML = 0;
   displayArr = [];
+  tempResult = [];
 };
 
 // Controlling display function
@@ -63,8 +64,18 @@ a set of numbers and operators
 to operate through and create the output result
 */
 const controlDisplay = sym => {
-  // if clicked button is an OPERATOR
   if (["+", "-", "*", "/"].includes(sym)) {
+    // if clicked button is an OPERATOR
+    // if tempResult array is not empty, use result value stored in tempResult and perform the operation
+    if (tempResult.length !== 0) {
+      // clear displayArr to clear values from screen
+      displayArr = []
+      // use previous result value as a starter value fo the next operation
+      displayArr.push(tempResult[0])
+      // clear tempResult array for the next result operation value
+      tempResult = []
+    }
+
     // get last item in displayArr
     let last = [...displayArr].pop();
     // if last item is NOT a square op., proceed otherwise don't consider the clicked operator
@@ -82,6 +93,14 @@ const controlDisplay = sym => {
     }
   } else if (sym === ".") {
     //if clicked button is a DECIMAL POINT
+    // if tempResult array is not empty, clear result value stored in tempResult and start new operation
+    if (tempResult.length !== 0) {
+      // clear displayArr to clear values from screen
+      displayArr = []
+      // clear tempResult array for the next result operation value
+      tempResult = []
+    }
+
     /* split displayArr at every operator to
     check if there is a decimal point
     in the typed number
@@ -116,6 +135,14 @@ const controlDisplay = sym => {
     }
   } else if (sym === "√") {
     // if clicked button is a SQUARE OPERATOR
+    // if tempResult array is not empty, clear result value stored in tempResult and start new operation
+    if (tempResult.length !== 0) {
+      // clear displayArr to clear values from screen
+      displayArr = []
+      // clear tempResult array for the next result operation value
+      tempResult = []
+    }
+
     /* Add square operator only if the previous
     clicked button is a normal operator
     */
@@ -154,6 +181,14 @@ const controlDisplay = sym => {
     // }
   } else if (sym === "0") {
     // if clicked button is zero
+    // if tempResult array is not empty, clear result value stored in tempResult and start new operation
+    if (tempResult.length !== 0) {
+      // clear displayArr to clear values from screen
+      displayArr = []
+      // clear tempResult array for the next result operation value
+      tempResult = []
+    }
+
     /* prevent starting any operated number with more than one zero
     - check if the last clicked button is zero
     - if No push zero to displayArr
@@ -179,6 +214,14 @@ const controlDisplay = sym => {
     }
   } else {
     // if clicked button is a NUMBER
+    // if tempResult array is not empty, clear result value stored in tempResult and start new operation
+    if (tempResult.length !== 0) {
+      // clear displayArr to clear values from screen
+      displayArr = []
+      // clear tempResult array for the next result operation value
+      tempResult = []
+    }
+
     displayArr.push(sym);
   }
 
@@ -333,6 +376,8 @@ const calculate = () => {
     // if result is a decimal number, limit decimal places to 5
     result = +result.toFixed(5)
   }
+  // store result value in tempResult array for the next operation
+  tempResult.push(result)
   display.innerHTML += `<br>${result}`
 };
 
