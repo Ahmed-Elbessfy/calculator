@@ -1,5 +1,6 @@
 // Variables
 // Display area
+let operation = document.querySelector("#operation");
 let display = document.querySelector("#display");
 // Buttons variables
 let clear = document.querySelector("#clear");
@@ -43,7 +44,7 @@ let numbers = [
   tempResult = [];
 
 // Set starting value in display area to 0
-let displayedNum = 0;
+let initialNum = 0;
 // let splReg = /[+/*-]/;
 // console.log("12354+ssdd-ffgfgbb.jj*4558.55612".split(splReg));
 // console.log(eval(((2 + 3) * 10) / 2 + Math.sqrt(49)));
@@ -54,6 +55,7 @@ let displayedNum = 0;
 const clearFun = () => {
   console.log("clearFun was called");
   display.innerHTML = 0;
+  operation.innerHTML = 0;
   displayArr = [];
   tempResult = [];
 };
@@ -378,7 +380,8 @@ const calculate = () => {
   }
   // store result value in tempResult array for the next operation
   tempResult.push(result)
-  display.innerHTML += `<br>${result}`
+  operation.innerHTML = displayArr.join('')
+  display.innerHTML = `${result}`
 };
 
 // Add event listener on clicking on a number button
@@ -401,5 +404,5 @@ document.addEventListener("keydown", e => {
 });
 
 equal.addEventListener("click", calculate);
-// Show displayNum on displaying area
-display.innerHTML = displayedNum;
+// Show InitialNum on displaying area
+display.innerHTML = initialNum;
