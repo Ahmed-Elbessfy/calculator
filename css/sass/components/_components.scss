@@ -15,8 +15,27 @@
   font-size: 1.5rem;
   font-weight: 600;
   text-align: right;
-  overflow: hidden;
+  overflow: auto;
 }
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(58, 67, 159, 0.5);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(58, 67, 159, 1);
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-track:hover {
+  border: 2px solid rgba(58, 67, 159, 1);
+  border-radius: 8px;
+}
+::-webkit-scrollbar {
+  height: 11px;
+}
+
 #display,
 #operation {
   width: 100%;
