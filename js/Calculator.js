@@ -4,7 +4,6 @@ let operation = document.querySelector("#operation");
 let display = document.querySelector("#display");
 // Buttons variables
 let clear = document.querySelector("#clear");
-let square = document.querySelector("#square");
 let divide = document.querySelector("#divide");
 let multiply = document.querySelector("#multiply");
 let seven = document.querySelector("#seven");
@@ -37,7 +36,7 @@ let numbers = [
   decimal
 ],
   // Operator array
-  operators = [add, subtract, divide, multiply, square],
+  operators = [add, subtract, divide, multiply],
   // Displayed data on display area
   displayArr = [],
   // temporary array to store result value for the next operation
@@ -80,33 +79,30 @@ const controlDisplay = sym => {
 
     // get last item in displayArr
     let last = [...displayArr].pop();
-    // if last item is NOT a square op., proceed otherwise don"t consider the clicked operator
-    if (last !== "√") {
-      // if last item is an operator but not a minus operator, replace it with the new clicked operator
-      if (["+", "*", "/"].includes(last)) {
-        // remove last item in displayArr
-        displayArr.pop();
-        // push the new operator at the end of the displayArr
-        displayArr.push(sym);
-        // If the last item is a minus operator,
-        // then check the second last item,
-        // if it is an operator too,
-        // then remove both and push the new clicked button
-      } else if (last === '-') {
-        // get the second last item in displayArr array and store in secondeLast variable
-        let secondLast = displayArr[displayArr.length - 2]
-        // check if secondLast is an ordinary operator
-        if (["+", "*", "/"].includes(secondLast)) {
-          // remove the last two items from displayArr array
-          displayArr.pop()
-          displayArr.pop()
-          // push the new clicked operator to displayArr
-          displayArr.push(sym)
-        }
-      } else {
-        // if last item is not an operator, push the clicked operator at the end of the displayArr
-        displayArr.push(sym);
+    // if last item is an operator but not a minus operator, replace it with the new clicked operator
+    if (["+", "*", "/"].includes(last)) {
+      // remove last item in displayArr
+      displayArr.pop();
+      // push the new operator at the end of the displayArr
+      displayArr.push(sym);
+      // If the last item is a minus operator,
+      // then check the second last item,
+      // if it is an operator too,
+      // then remove both and push the new clicked button
+    } else if (last === '-') {
+      // get the second last item in displayArr array and store in secondeLast variable
+      let secondLast = displayArr[displayArr.length - 2]
+      // check if secondLast is an ordinary operator
+      if (["+", "*", "/"].includes(secondLast)) {
+        // remove the last two items from displayArr array
+        displayArr.pop()
+        displayArr.pop()
+        // push the new clicked operator to displayArr
+        displayArr.push(sym)
       }
+    } else {
+      // if last item is not an operator, push the clicked operator at the end of the displayArr
+      displayArr.push(sym);
     }
   } else if (sym === '-') {
     // if clicked button is a Minus OPERATOR
@@ -141,7 +137,7 @@ const controlDisplay = sym => {
     in the typed number
     */
     // regexp to select only operator signs
-    let rgb = /[√+/*-]/;
+    let rgb = /[+/*-]/;
     // join displayArr then split it cuz split is a string method
     let check = displayArr.join("").split(rgb);
     /* if there is no decimal point in the
@@ -168,52 +164,6 @@ const controlDisplay = sym => {
         displayArr.push(sym);
       }
     }
-  } else if (sym === "√") {
-    // if clicked button is a SQUARE OPERATOR
-    // if tempResult array is not empty, clear result value stored in tempResult and start new operation
-    if (tempResult.length !== 0) {
-      // clear displayArr to clear values from screen
-      displayArr = []
-      // clear tempResult array for the next result operation value
-      tempResult = []
-    }
-
-    /* Add square operator only if the previous
-    clicked button is a normal operator
-    */
-    // get last item in displayArr
-    let last = [...displayArr].pop();
-    // if displayArr is not empty which means that a Square operator is not the first clicked button
-    if (displayArr.length > 0) {
-      // check if the last clicked button is an Operator
-      if (["+", "-", "*", "/"].includes(last)) {
-        // if last button is an operator, then accept the square operator
-        displayArr.push(sym)
-      }
-      // if displayArr is empty which means that square operator is first clicked button, then accept square operator
-    } else {
-      displayArr.push(sym)
-    }
-
-    /* split displayArr at every operator to
-    check if there is a Square operator
-    in the typed number
-    */
-    // console.log(displayArr)
-    // // regexp to select only operator signs but without square operator
-    // let rgb = /[+/*-]/;
-    // // join displayArr then split it cuz split is a string method
-    // let check = displayArr.join("").split(rgb);
-    // /* if there is no square operator in the
-    // last typed number and the last clicked button is a normal number
-    // then add a square operator else don't
-    // */
-    // if (
-    //   !check[check.length - 1].includes("√") &&
-    //   ["+", "-", "*", "/"].includes(displayArr[displayArr.length - 1])
-    // ) {
-    //   displayArr.push(sym);
-    // }
   } else if (sym === "0") {
     // if clicked button is zero
     // if tempResult array is not empty, clear result value stored in tempResult and start new operation
@@ -340,71 +290,10 @@ document.addEventListener('keydown', e => {
 
 // Calculate function
 const calculate = () => {
-  // result variable where final result array stored
-  let result;
-  /* if the displayArr includes a square operation:
-      - create an operated array to hold joined operated numbers and operators
-      and num array to temporary hold current numbers
-      - loop through displayArr elements:
-        - if element is number or square operator, push it to num array
-        - if element is an operator of these (+,-,*,/), push joined num array
-        to operated array as old number is completed and new number will start
-        then push element ( which is one of these (+,-,*,/) ) to operated array
-        and finally empty num array for the new number
-      - loop through operated array elements:
-        - if element includes a square operator, replace it with square of the included number
-      - and finally, set result value to be joined operated array
-    if the displayArr doesn't include a square operation:
-      - set result value to be joined displayArr array
-  */
-  // if displayArr includes square operation
-  if (displayArr.includes('√')) {
-    // declare operated and num array
-    let operated = []
-    let num = []
-    // loop through displayArr to store joined numbers and operators in the operated array
-    displayArr.forEach(it => {
-      // if element is an one of these operators (+,-,*,/)
-      if (["+", "/", "*", "-"].includes(it)) {
-        // current number is completed, so push joined num array to operated array
-        operated.push(num.join(""))
-        // push element which is one of these operators (+,-,*,/) after the current number
-        operated.push(it)
-        // empty num array to the new number
-        num = []
-      } else {
-        // if element is a number or a square operator, then push to num array
-        num.push(it)
-      }
-    })
-    // if last element of displayArr array is not one of these operators (+,-,*,/),
-    // then the last operated number - which is currently stored in num array -
-    // won't be add to operated array and won't be calculated,
-    // so we need to check if the last operated value == the joined num array,
-    // if not, push joined num array to operated array and empty num array for future numbers
-    if (operated[operated.length - 1] !== num.join("")) {
-      operated.push(num.join(""))
-      num = []
-    }
+  // calculation result stored in result variable
+  // calculation result is the value of joined displayArr array
+  let result = eval(displayArr.join(""))
 
-    // loop through operated array to find elements contains square operators
-    operated.forEach((item, i) => {
-      // if element contains a square operators,
-      // get element value without square operator using substring
-      // then get square value of the new element value
-      // then replace the element with the new square value
-      if (item.includes("√")) {
-        operated.splice(i, 1, Math.sqrt(item.substring(1)))
-      }
-    })
-    // finally, assign joined operated array to result variable
-    result = operated.join("")
-  } else {
-    // assign displayArr operated array to result variable
-    result = displayArr.join("")
-  }
-  // get final value of result
-  result = eval(result)
   // if result is a decimal number, then it must have only 5 decimal places
   // check if result is a decimal number by comparing Math.floor value for result with original result value
   if (result !== Math.floor(result)) {
