@@ -53,7 +53,7 @@ let initialNum = 0;
 const clearFun = () => {
   console.log("clearFun was called");
   display.innerHTML = 0;
-  operation.innerHTML = 0;
+  operation.innerHTML = '';
   displayArr = [];
   tempResult = [];
 };
