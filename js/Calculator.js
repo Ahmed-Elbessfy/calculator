@@ -66,8 +66,8 @@ a set of numbers and operators
 to operate through and create the output result
 */
 const controlDisplay = sym => {
-  if (["+", "-", "*", "/"].includes(sym)) {
-    // if clicked button is an OPERATOR
+  if (["+", "*", "/"].includes(sym)) {
+    // if clicked button is an OPERATOR but not a minus operator
     // if tempResult array is not empty, use result value stored in tempResult and perform the operation
     if (tempResult.length !== 0) {
       // clear displayArr to clear values from screen
@@ -80,19 +80,52 @@ const controlDisplay = sym => {
 
     // get last item in displayArr
     let last = [...displayArr].pop();
-    // if last item is NOT a square op., proceed otherwise don't consider the clicked operator
+    // if last item is NOT a square op., proceed otherwise don"t consider the clicked operator
     if (last !== "√") {
-      // if last item is an operator, replace it with the new clicked operator
-      if (["+", "-", "*", "/"].includes(last)) {
+      // if last item is an operator but not a minus operator, replace it with the new clicked operator
+      if (["+", "*", "/"].includes(last)) {
         // remove last item in displayArr
         displayArr.pop();
         // push the new operator at the end of the displayArr
         displayArr.push(sym);
+        // If the last item is a minus operator,
+        // then check the second last item,
+        // if it is an operator too,
+        // then remove both and push the new clicked button
+      } else if (last === '-') {
+        // get the second last item in displayArr array and store in secondeLast variable
+        let secondLast = displayArr[displayArr.length - 2]
+        // check if secondLast is an ordinary operator
+        if (["+", "*", "/"].includes(secondLast)) {
+          // remove the last two items from displayArr array
+          displayArr.pop()
+          displayArr.pop()
+          // push the new clicked operator to displayArr
+          displayArr.push(sym)
+        }
       } else {
         // if last item is not an operator, push the clicked operator at the end of the displayArr
         displayArr.push(sym);
       }
     }
+  } else if (sym === '-') {
+    // if clicked button is a Minus OPERATOR
+    // if tempResult array is not empty, use result value stored in tempResult and perform the operation
+    if (tempResult.length !== 0) {
+      // clear displayArr to clear values from screen
+      displayArr = []
+      // use previous result value as a starter value fo the next operation
+      displayArr.push(tempResult[0])
+      // clear tempResult array for the next result operation value
+      tempResult = []
+    }
+    // get last item in displayArr
+    let last = [...displayArr].pop();
+    // check that the last item in displayArr array is not a minus operator or square operator
+    if (last !== '-' && last !== '√') {
+      displayArr.push(sym)
+    }
+
   } else if (sym === ".") {
     //if clicked button is a DECIMAL POINT
     // if tempResult array is not empty, clear result value stored in tempResult and start new operation
