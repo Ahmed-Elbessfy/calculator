@@ -2,6 +2,7 @@
 // Display area
 let operation = document.querySelector("#operation");
 let display = document.querySelector("#display");
+
 // Buttons variables
 let clear = document.querySelector("#clear");
 let divide = document.querySelector("#divide");
@@ -20,6 +21,7 @@ let one = document.querySelector("#one");
 let decimal = document.querySelector("#decimal");
 let zero = document.querySelector("#zero");
 let equal = document.querySelector("#equals");
+
 // Arrays
 // Numbers array
 let numbers = [
@@ -34,22 +36,19 @@ let numbers = [
   nine,
   zero,
   decimal
-],
-  // Operator array
-  operators = [add, subtract, divide, multiply],
-  // Displayed data on display area
-  displayArr = [],
-  // temporary array to store result value for the next operation
-  tempResult = [];
+]
+
+// Operator array
+operators = [add, subtract, divide, multiply]
+// Displayed data on display area
+displayArr = []
+// temporary array to store result value for the next operation
+tempResult = [];
 
 // Set starting value in display area to 0
 let initialNum = 0;
-// let splReg = /[+/*-]/;
-// console.log("12354+ssdd-ffgfgbb.jj*4558.55612".split(splReg));
-// console.log(eval(((2 + 3) * 10) / 2 + Math.sqrt(49)));
 
 // Functions
-
 // Clear function
 const clearFun = () => {
   console.log("clearFun was called");
@@ -69,7 +68,7 @@ const controlDisplay = sym => {
     // if clicked button is an OPERATOR but not a minus operator
     // if tempResult array is not empty, use result value stored in tempResult and perform the operation
     if (tempResult.length !== 0) {
-      // clear displayArr to clear values from screen
+      // clear displayArr to clear values from display area
       displayArr = []
       // use previous result value as a starter value fo the next operation
       displayArr.push(tempResult[0])
@@ -108,7 +107,7 @@ const controlDisplay = sym => {
     // if clicked button is a Minus OPERATOR
     // if tempResult array is not empty, use result value stored in tempResult and perform the operation
     if (tempResult.length !== 0) {
-      // clear displayArr to clear values from screen
+      // clear displayArr to clear values from display area
       displayArr = []
       // use previous result value as a starter value fo the next operation
       displayArr.push(tempResult[0])
@@ -117,16 +116,16 @@ const controlDisplay = sym => {
     }
     // get last item in displayArr
     let last = [...displayArr].pop();
-    // check that the last item in displayArr array is not a minus operator or square operator
-    if (last !== '-' && last !== '√') {
+    // check that the last item in displayArr array is not a minus operator
+    if (last !== '-') {
       displayArr.push(sym)
     }
 
   } else if (sym === ".") {
-    //if clicked button is a DECIMAL POINT
+    // if clicked button is a DECIMAL POINT
     // if tempResult array is not empty, clear result value stored in tempResult and start new operation
     if (tempResult.length !== 0) {
-      // clear displayArr to clear values from screen
+      // clear displayArr to clear values from display area
       displayArr = []
       // clear tempResult array for the next result operation value
       tempResult = []
@@ -168,7 +167,7 @@ const controlDisplay = sym => {
     // if clicked button is zero
     // if tempResult array is not empty, clear result value stored in tempResult and start new operation
     if (tempResult.length !== 0) {
-      // clear displayArr to clear values from screen
+      // clear displayArr to clear values from display area
       displayArr = []
       // clear tempResult array for the next result operation value
       tempResult = []
@@ -176,7 +175,7 @@ const controlDisplay = sym => {
 
     /* prevent starting any operated number with more than one zero
     - check if the last clicked button is zero
-    - if No push zero to displayArr
+    - if No, push zero to displayArr
     - If Yes:
       - check if the secondLast element is NOT
         - a NaN ( if it was starting number) and NOT and operator
@@ -190,7 +189,7 @@ const controlDisplay = sym => {
       // get the second last element in displayArr
       let secondLast = displayArr[displayArr.length - 2]
       // if secondLast element is not an Operator and not a NaN or equals decimal point, push zero to displayArr
-      if (!["√", "+", "/", "*", "-"].includes(secondLast) && !isNaN(secondLast) || secondLast == ".") {
+      if (!["+", "/", "*", "-"].includes(secondLast) && !isNaN(secondLast) || secondLast == ".") {
         displayArr.push(sym)
       }
     } else {
@@ -201,7 +200,7 @@ const controlDisplay = sym => {
     // if clicked button is a NUMBER
     // if tempResult array is not empty, clear result value stored in tempResult and start new operation
     if (tempResult.length !== 0) {
-      // clear displayArr to clear values from screen
+      // clear displayArr to clear values from display area
       displayArr = []
       // clear tempResult array for the next result operation value
       tempResult = []
@@ -213,6 +212,42 @@ const controlDisplay = sym => {
   // displayed clicked buttons in the display area
   display.innerHTML = displayArr.join("");
 };
+
+
+// Calculate function
+const calculate = () => {
+  // calculation result stored in result variable
+  // calculation result is the value of joined displayArr array
+  let result = eval(displayArr.join(""))
+
+  // if result is a decimal number, then it must have only 5 decimal places
+  // check if result is a decimal number by comparing Math.floor value for result with original result value
+  if (result !== Math.floor(result)) {
+    // if result is a decimal number, limit decimal places to 5
+    result = +result.toFixed(5)
+  }
+  // store result value in tempResult array for the next operation
+  tempResult.push(result)
+  operation.innerHTML = displayArr.join('')
+  display.innerHTML = `${result}`
+};
+
+// Add event listener on clicking on a number button
+for (num of numbers) {
+  num.onclick = e => controlDisplay(e.target.innerHTML);
+}
+
+// Add event listener on clicking on a number button
+for (operator of operators) {
+  operator.onclick = e => controlDisplay(e.target.innerHTML);
+}
+
+// Functionality
+// Show InitialNum on displaying area
+display.innerHTML = initialNum;
+
+clear.addEventListener("click", clearFun);
+equal.addEventListener("click", calculate);
 
 // Keyboard controlling keys
 document.addEventListener('keydown', e => {
@@ -286,45 +321,8 @@ document.addEventListener('keydown', e => {
   if (e.keyCode == 187) {
     calculate()
   }
-})
-
-// Calculate function
-const calculate = () => {
-  // calculation result stored in result variable
-  // calculation result is the value of joined displayArr array
-  let result = eval(displayArr.join(""))
-
-  // if result is a decimal number, then it must have only 5 decimal places
-  // check if result is a decimal number by comparing Math.floor value for result with original result value
-  if (result !== Math.floor(result)) {
-    // if result is a decimal number, limit decimal places to 5
-    result = +result.toFixed(5)
-  }
-  // store result value in tempResult array for the next operation
-  tempResult.push(result)
-  operation.innerHTML = displayArr.join('')
-  display.innerHTML = `${result}`
-};
-
-// Add event listener on clicking on a number button
-for (num of numbers) {
-  num.onclick = e => controlDisplay(e.target.innerHTML);
-}
-
-// Add event listener on clicking on a number button
-for (operator of operators) {
-  operator.onclick = e => controlDisplay(e.target.innerHTML);
-}
-
-// Functionality
-clear.addEventListener("click", clearFun);
-document.addEventListener("keydown", e => {
-  // console.log(e.keyCode);
+  // Clear
   if (e.keyCode === 46) {
     clearFun();
   }
-});
-
-equal.addEventListener("click", calculate);
-// Show InitialNum on displaying area
-display.innerHTML = initialNum;
+})
